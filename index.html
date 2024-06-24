@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to Voice</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="hero">
+        <h1>Text to Speech <span>Converter</span></h1>
+        <textarea placeholder="Write anything here..."></textarea>
+        <div class="row">
+            <select></select>
+            <button><img src="../voice converter/images/play.jpeg">Speech</button>
+        </div>
+    </div>
+</body>
+<script>
+    let speech = new SpeechSynthesisUtterance();
+
+    let voice = [];
+    
+    let voiceSelect = document.querySelector("select");
+
+    window.speechSynthesis.onvoiceschanged = () =>{
+        voices = window.speechSynthesis.getVoices();
+        speech.voice = voices[0];
+
+        voices.forEach((voice,i) =>(voiceSelect.options[i] = new Option(voice.name,i)));
+            
+        };
+
+    voiceSelect.addEventListener("change",()=>{
+        speech.voice = voices[voiceSelect.value];
+    });    
+    
+    document.querySelector("button").addEventListener("click",()=>{
+        speech.text = document.querySelector("textarea").value;
+        window.speechSynthesis.speak(speech);
+    });
+</script>
+</html>
